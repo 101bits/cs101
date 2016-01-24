@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 public class RwayTrieTest {
@@ -46,7 +47,7 @@ public class RwayTrieTest {
     }
 
     @Test
-    public void testKeys() throws Exception {
+    public void testAllKeys() throws Exception {
         final Set<String> strings = new HashSet<String>(Arrays.asList("she", "sells", "shells", "by", "sea", "shore"));
         for (final String key : strings) {
             rwayTrie.put(key, 1);
@@ -61,5 +62,23 @@ public class RwayTrieTest {
         assertEquals(strings.size(), result.size());
         assertTrue(strings.containsAll(result));
         assertTrue(result.containsAll(strings));
+    }
+
+    @Test
+    public void testKeysWithPrefix() throws Exception {
+        final Set<String> strings = new HashSet<String>(Arrays.asList("she", "sells", "shells", "by", "sea", "shore"));
+        for (final String key : strings) {
+            rwayTrie.put(key, 1);
+        }
+
+        final Set<String> result = new HashSet<String>();
+        Iterable<String> keysWithSh = rwayTrie.keysWithPrefix("sh");
+        for (String key : keysWithSh) {
+            result.add(key);
+        }
+
+        assertNotEquals(strings.size(), result.size());
+        assertEquals(3, result.size());
+        assertTrue(result.containsAll(Arrays.asList("she", "shells", "shore")));
     }
 }
