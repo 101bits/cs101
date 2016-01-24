@@ -1,3 +1,6 @@
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class RwayTrie<T> {
     private static class Node<T> {
         private T value;
@@ -38,5 +41,27 @@ public class RwayTrie<T> {
         }
 
         return get(x.next[key.charAt(d)], key, d + 1);
+    }
+
+    public Iterable<String> keys() {
+        return keysWithPrefix("");
+    }
+
+    public Iterable<String> keysWithPrefix(String pre) {
+        Queue<String> q = new LinkedList<String>();
+        collect(get(root, pre, 0), pre, q);
+        return q;
+    }
+
+    private void collect(Node x, String pre, Queue q) {
+        if (x == null) {
+            return;
+        }
+        if (x.value != null) {
+            q.add(pre.toString());
+        }
+        for (int c = 0; c < R; c++) {
+            collect(x.next[c], pre + Character.toString((char) c), q);
+        }
     }
 }
