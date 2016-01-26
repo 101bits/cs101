@@ -95,4 +95,15 @@ public class RwayTrieTest {
         assertEquals(1, setMatchedShells.size());
         assertEquals("shells", setMatchedShells.iterator().next());
     }
+
+    @Test
+    public void testLongestPrefix() throws Exception {
+        rwayTrie.put("she", 1);
+        rwayTrie.put("shells", 2);
+        rwayTrie.put("shellsort", 3);
+
+        assertEquals("", rwayTrie.longestPrefix("she"));
+        assertEquals("she", rwayTrie.longestPrefix("shells"));
+        assertEquals("shells", rwayTrie.longestPrefix("shellsort"));
+    }
 }

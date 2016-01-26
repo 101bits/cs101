@@ -71,21 +71,39 @@ public class RwayTrie<T> {
     }
 
     private void collect(Node n, String pre, String pattern, Queue<String> queue) {
-        if (n == null) {
+        if(n == null) {
             return;
         }
         int d = pre.length();
-        if (d == pattern.length() && n.value != null) {
+        if(n.value != null && d == pattern.length()) {
             queue.add(pre);
         }
         if (d == pattern.length()) {
             return;
         }
         char next = pattern.charAt(d);
-        for (int c = 0; c < R; c++) {
-            if (c == next || next == '.') {
-                collect(n.next[c], pre + Character.toString((char) c), pattern, queue);
+        for (int i = 0; i < R; i++) {
+            if (next == i || next == '.') {
+                collect(n.next[i], pre + Character.toString((char) i), pattern, queue);
             }
         }
+    }
+
+    public String longestPrefix(String s) {
+        int longest = search(root, s, 0, 0);
+        return s.substring(0, longest);
+    }
+
+    private int search(Node n, String s, int d, int length) {
+        if (n == null || d == s.length()) {
+            return length;
+        }
+
+        if (n.value != null) {
+            length = d;
+        }
+
+        char c = s.charAt(d);
+        return search(n.next[c], s, d + 1, length);
     }
 }
