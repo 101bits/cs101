@@ -1,4 +1,3 @@
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -60,8 +59,33 @@ public class RwayTrie<T> {
         if (n.value != null) {
             queue.add(pre);
         }
-        for(int c = 0; c < R; c++) {
+        for (int c = 0; c < R; c++) {
             collect(n.next[c], queue, pre + Character.toString((char) c));
+        }
+    }
+
+    public Iterable<String> keysThatMatch(String pattern) {
+        Queue<String> queue = new LinkedList<>();
+        collect(root, "", pattern, queue);
+        return queue;
+    }
+
+    private void collect(Node n, String pre, String pattern, Queue<String> queue) {
+        if (n == null) {
+            return;
+        }
+        int d = pre.length();
+        if (d == pattern.length() && n.value != null) {
+            queue.add(pre);
+        }
+        if (d == pattern.length()) {
+            return;
+        }
+        char next = pattern.charAt(d);
+        for (int c = 0; c < R; c++) {
+            if (c == next || next == '.') {
+                collect(n.next[c], pre + Character.toString((char) c), pattern, queue);
+            }
         }
     }
 }

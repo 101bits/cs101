@@ -81,4 +81,18 @@ public class RwayTrieTest {
         assertEquals(3, result.size());
         assertTrue(result.containsAll(Arrays.asList("she", "shells", "shore")));
     }
+
+    @Test
+    public void testKeysThatMatch() {
+        rwayTrie.put("she", 0);
+        rwayTrie.put("sells", 1);
+        rwayTrie.put("shells", 2);
+
+        Set<String> setMatchedShells = new HashSet<>();
+        for (String key : rwayTrie.keysThatMatch(".he..s")) {
+            setMatchedShells.add(key);
+        }
+        assertEquals(1, setMatchedShells.size());
+        assertEquals("shells", setMatchedShells.iterator().next());
+    }
 }
