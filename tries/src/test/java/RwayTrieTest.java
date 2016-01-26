@@ -14,7 +14,7 @@ public class RwayTrieTest {
 
     @Before
     public void setUp() throws Exception {
-        rwayTrie = new RwayTrie<Integer>();
+        rwayTrie = new RwayTrie<>();
     }
 
     @Test
@@ -48,12 +48,12 @@ public class RwayTrieTest {
 
     @Test
     public void testAllKeys() throws Exception {
-        final Set<String> strings = new HashSet<String>(Arrays.asList("she", "sells", "shells", "by", "sea", "shore"));
+        final Set<String> strings = new HashSet<>(Arrays.asList("she", "sells", "shells", "by", "sea", "shore"));
         for (final String key : strings) {
             rwayTrie.put(key, 1);
         }
 
-        final Set<String> result = new HashSet<String>();
+        final Set<String> result = new HashSet<>();
         Iterable<String> keys = rwayTrie.keys();
         for (String key : keys) {
             result.add(key);
@@ -66,12 +66,12 @@ public class RwayTrieTest {
 
     @Test
     public void testKeysWithPrefix() throws Exception {
-        final Set<String> strings = new HashSet<String>(Arrays.asList("she", "sells", "shells", "by", "sea", "shore"));
+        final Set<String> strings = new HashSet<>(Arrays.asList("she", "sells", "shells", "by", "sea", "shore"));
         for (final String key : strings) {
             rwayTrie.put(key, 1);
         }
 
-        final Set<String> result = new HashSet<String>();
+        final Set<String> result = new HashSet<>();
         Iterable<String> keysWithSh = rwayTrie.keysWithPrefix("sh");
         for (String key : keysWithSh) {
             result.add(key);
